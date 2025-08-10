@@ -124,9 +124,39 @@ cd c:\Study\mcp\db_mcp
 dotnet publish -c Release -r win-x64 --self-contained false
 ```
 
-#### 步驟 2：在其他專案的 mcp.json 中設定
+#### 步驟 2：設定 MCP 伺服器
 
-**使用環境變數（推薦）：**
+##### 選項 A：使用者全域設定（適合多專案同一Database）
+
+在 VS Code 使用者設定中配置，讓所有專案都能使用：
+
+**檔案位置：** `%APPDATA%\Code\User\mcp.json` (Windows)
+
+```json
+{
+  "servers": {
+    "database-mcp": {
+      "command": "c:\\Study\\mcp\\db_mcp\\bin\\Release\\net8.0\\win-x64\\publish\\DbMcpServer.exe",
+      "args": [],
+      "env": {
+        "CONNECTION_STRING": "Host=localhost;Database=your_default_db;Username=postgres;Password=yourpassword;Port=5432;",
+        "DOTNET_ENVIRONMENT": "Production"
+      }
+    }
+  }
+}
+```
+
+**優點：**
+- 無需在每個專案設定
+- 所有 VS Code 工作區自動可用
+- 統一的資料庫存取設定
+
+##### 選項 B：專案工作區設定（適合每個專案都有個別的Database）
+
+在專案根目錄建立 `.vscode/mcp.json`：
+
+**使用環境變數：**
 ```json
 {
   "servers": {
@@ -153,6 +183,11 @@ dotnet publish -c Release -r win-x64 --self-contained false
   }
 }
 ```
+
+**優點：**
+- 每個專案可有不同的資料庫設定
+- 設定隨專案版本控制
+- 適合需要連接不同資料庫的專案
 
 ### 方案 2：全域工具安裝
 
@@ -306,6 +341,8 @@ GRANT SELECT ON ALL TABLES IN SCHEMA public TO postgres;
 
 ## 部署建議
 
+- **多專案共用Database**: 使用方案 1 + 使用者全域設定，一次設定全專案可用
+- **每個專案獨立Database**: 使用方案 1 + 專案工作區設定，可針對不同專案設定不同資料庫
 - **開發階段**: 使用方案 3（絕對路徑），方便除錯
 - **生產環境**: 使用方案 1（發布可執行檔案），效能最佳
 - **多機器部署**: 使用方案 2（全域工具），便於維護
