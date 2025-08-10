@@ -4,7 +4,7 @@ public class TableSchema
 {
     public string TableName { get; set; } = string.Empty;
     public string SchemaName { get; set; } = string.Empty;
-    public List&lt;ColumnInfo&gt; Columns { get; set; } = new();
+    public List<ColumnInfo> Columns { get; set; } = new();
 }
 
 public class ColumnInfo
@@ -24,7 +24,7 @@ public class StoredProcedureInfo
     public string Name { get; set; } = string.Empty;
     public string SchemaName { get; set; } = string.Empty;
     public string? Definition { get; set; }
-    public List&lt;ParameterInfo&gt; Parameters { get; set; } = new();
+    public List<ParameterInfo> Parameters { get; set; } = new();
 }
 
 public class ParameterInfo

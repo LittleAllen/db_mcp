@@ -13,9 +13,9 @@ public class DatabaseService
         _connectionString = connectionString;
     }
 
-    public async Task&lt;List&lt;string&gt;&gt; GetTablesAsync()
+    public async Task<List<string>> GetTablesAsync()
     {
-        var tables = new List&lt;string&gt;();
+        var tables = new List<string>();
         
         using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync();
@@ -37,7 +37,7 @@ public class DatabaseService
         return tables;
     }
 
-    public async Task&lt;TableSchema&gt; GetTableSchemaAsync(string tableName)
+    public async Task<TableSchema> GetTableSchemaAsync(string tableName)
     {
         var parts = tableName.Split('.');
         var schemaName = parts.Length == 2 ? parts[0] : "dbo";
@@ -106,9 +106,9 @@ public class DatabaseService
         return schema;
     }
 
-    public async Task&lt;List&lt;StoredProcedureInfo&gt;&gt; GetStoredProceduresAsync()
+    public async Task<List<StoredProcedureInfo>> GetStoredProceduresAsync()
     {
-        var procedures = new List&lt;StoredProcedureInfo&gt;();
+        var procedures = new List<StoredProcedureInfo>();
         
         using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync();
@@ -138,7 +138,7 @@ public class DatabaseService
         return procedures;
     }
 
-    public async Task&lt;DataTable&gt; ExecuteQueryAsync(string query, int maxRows = 100)
+    public async Task<DataTable> ExecuteQueryAsync(string query, int maxRows = 100)
     {
         if (ContainsUnsafeOperations(query))
         {
@@ -160,7 +160,7 @@ public class DatabaseService
         return dataTable;
     }
 
-    public async Task&lt;DataTable&gt; GetSampleDataAsync(string tableName, int maxRows = 5)
+    public async Task<DataTable> GetSampleDataAsync(string tableName, int maxRows = 5)
     {
         var parts = tableName.Split('.');
         var schemaName = parts.Length == 2 ? parts[0] : "dbo";
