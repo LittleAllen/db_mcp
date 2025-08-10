@@ -1,0 +1,12 @@
+{
+  "servers": {
+    "database-mcp": {
+      "command": "dotnet",
+      "args": ["run", "--project", "DbMcpServer.csproj"],
+      "cwd": ".",
+      "env": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
